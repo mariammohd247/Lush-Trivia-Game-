@@ -1,0 +1,1081 @@
+/* ─── Variables ─────────────────────────────────────────────────── */
+:root {
+  --black: #1D1D1B;
+  --white: #FFFFFF;
+  --green: #009453;
+  --red: #E1042D;
+  --green-light: #00C46A;
+  --red-light: #FF3A55;
+  --bg: #F7F5F0;
+  --surface: #FFFFFF;
+  --border: #E0DDD8;
+  --text: #1D1D1B;
+  --text-muted: #666;
+  --correct: #009453;
+  --wrong: #E1042D;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.18);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "DM Sans", "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Screens ─────────────────────────────────────────────────────── */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+
+/* ─── Welcome / Name Entry Screen — background handled in new CSS block below ── */
+
+.welcome-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+}
+
+.lush-logo {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: clamp(52px, 12vw, 88px);
+  color: var(--white);
+  letter-spacing: -2px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lush-logo span {
+  display: inline-block;
+  background: linear-gradient(135deg, #009453, #00C46A);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-subtitle {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: clamp(18px, 4vw, 26px);
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.welcome-tagline {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.welcome-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.welcome-form label {
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+
+#player-name {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  font-size: 18px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#player-name::placeholder { color: rgba(255,255,255,0.3); }
+#player-name:focus { border-color: var(--green); }
+
+#start-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-family: "Fredoka One", "Fredoka", cursive;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-transform: uppercase;
+}
+
+#start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,148,83,0.5);
+}
+
+#start-btn:active { transform: translateY(0); }
+
+.welcome-scores-link {
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.welcome-scores-link:hover { color: rgba(255,255,255,0.7); }
+
+/* ─── Category Screen ─────────────────────────────────────────────── */
+#screen-categories {
+  background: var(--bg);
+  gap: 32px;
+}
+
+.categories-title {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: clamp(28px, 6vw, 44px);
+  color: var(--text);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.categories-subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: -20px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 960px;
+  width: 100%;
+}
+
+.category-btn {
+  position: relative;
+  height: 220px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--white);
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+  padding: 0;
+  background: #111;
+}
+
+.category-btn:hover { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-lg); }
+.category-btn:active { transform: translateY(0) scale(1); }
+
+/* Product photo layer */
+.cat-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+}
+.category-btn:hover .cat-img { transform: scale(1.08); }
+
+/* Colour-tinted gradient overlay */
+.cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05) 0%,
+    color-mix(in srgb, var(--cat-color) 60%, transparent) 100%
+  );
+}
+
+/* 6 Values card — no photo, branded gradient */
+.cat-values-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1D1D1B 0%, #009453 100%);
+}
+
+/* Text content pinned to bottom */
+.cat-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 16px 18px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.72) 60%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.category-name {
+  font-family: "Lilita One", cursive;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.category-desc {
+  font-size: 11px;
+  opacity: 0.85;
+  line-height: 1.4;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* ─── Question Screen ─────────────────────────────────────────────── */
+#screen-question {
+  background: var(--bg);
+  justify-content: flex-start;
+  padding: 0;
+  align-items: stretch;
+}
+
+.question-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px 24px;
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.q-category-label {
+  padding: 6px 14px;
+  border-radius: 100px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.q-number {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.q-score {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 15px;
+  color: var(--text);
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* Question card */
+.question-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  margin-bottom: 16px;
+}
+
+#question-text {
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* Product photo card */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.product-photo {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+
+.product-detail-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+  font-style: italic;
+}
+
+/* Answer buttons */
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.answer-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  line-height: 1.4;
+}
+
+.answer-btn:not(:disabled):hover {
+  border-color: var(--black);
+  background: #f0ede8;
+  transform: translateY(-1px);
+}
+
+.answer-label {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--black);
+  color: var(--white);
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.answer-text { flex: 1; }
+
+/* Correct / Wrong states */
+.answer-btn.correct {
+  border-color: var(--correct);
+  background: rgba(0,148,83,0.08);
+  animation: pulse-green 0.4s ease;
+}
+
+.answer-btn.correct .answer-label {
+  background: var(--correct);
+}
+
+.answer-btn.wrong {
+  border-color: var(--wrong);
+  background: rgba(225,4,45,0.08);
+  animation: shake 0.4s ease;
+}
+
+.answer-btn.wrong .answer-label {
+  background: var(--wrong);
+}
+
+.answer-btn:disabled {
+  cursor: default;
+}
+
+/* Explanation */
+#explanation {
+  background: rgba(0,148,83,0.08);
+  border-left: 4px solid var(--green);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Next button */
+#next-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-family: "Fredoka One", "Fredoka", cursive;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#next-btn:hover { background: #333; transform: translateY(-1px); }
+
+/* ─── Results Screen ──────────────────────────────────────────────── */
+#screen-results {
+  background: var(--black);
+  gap: 28px;
+  padding: 40px 20px;
+}
+
+.results-inner {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.results-title {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: clamp(32px, 7vw, 52px);
+  color: var(--white);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.results-score-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-player { font-size: 16px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+.results-player strong { color: var(--white); }
+
+.results-big-score {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: clamp(56px, 14vw, 96px);
+  color: var(--green);
+  line-height: 1;
+}
+
+.results-fraction { font-size: 16px; color: rgba(255,255,255,0.5); }
+.results-percent { font-family: "Fredoka One", "Fredoka", cursive; font-size: 28px; color: var(--white); }
+.results-category { font-size: 13px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+.results-message { font-size: 18px; color: rgba(255,255,255,0.85); font-weight: 600; margin-top: 4px; }
+
+/* Leaderboard */
+.leaderboard-title {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 22px;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.leaderboard-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.leaderboard-table td {
+  padding: 12px 16px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.leaderboard-table tr.current-player td {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.results-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-family: "Fredoka One", "Fredoka", cursive;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,148,83,0.4); }
+
+.btn-secondary {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: "Fredoka One", "Fredoka", cursive;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+
+/* ─── Overlays ────────────────────────────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  display: none;
+}
+
+#wrong-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(225, 4, 45, 0);
+  pointer-events: none;
+  z-index: 998;
+  transition: background 0.1s;
+}
+#wrong-overlay.active {
+  animation: wrong-flash 0.7s ease forwards;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrong-flash {
+  0% { background: rgba(225,4,45,0); }
+  30% { background: rgba(225,4,45,0.18); }
+  100% { background: rgba(225,4,45,0); }
+}
+
+.shake { animation: shake 0.5s ease; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .category-btn { height: 180px; }
+}
+
+@media (max-width: 540px) {
+  .answers-grid { grid-template-columns: 1fr; }
+  .answer-btn { font-size: 14px; padding: 14px 14px; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .category-btn { height: 160px; }
+  .category-name { font-size: 19px; }
+}
+
+@media (max-width: 380px) {
+  .categories-grid { grid-template-columns: 1fr 1fr; }
+  .category-btn { height: 140px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   THEME SYSTEM
+═══════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+  --bg: #1a1a18;
+  --surface: #252523;
+  --border: #3a3a38;
+  --text: #F0EDE8;
+  --text-muted: #888;
+}
+
+/* Light mode: make welcome + results lighter */
+[data-theme="light"] #screen-welcome {
+  background: linear-gradient(160deg, #e5f5ed 0%, #faf8f3 55%, #fdf0f5 100%);
+}
+[data-theme="light"] #screen-welcome::before { display: none; }
+[data-theme="light"] .wb { opacity: 0.08; }
+[data-theme="light"] .welcome-badge { color: rgba(29,29,27,0.5); }
+[data-theme="light"] .ws-lbl { color: rgba(29,29,27,0.5); }
+[data-theme="light"] .ws-sep { background: rgba(29,29,27,0.15); }
+[data-theme="light"] .ws-num { color: var(--green); }
+[data-theme="light"] .welcome-form {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(29,29,27,0.12);
+}
+[data-theme="light"] .welcome-form label { color: rgba(29,29,27,0.65); }
+[data-theme="light"] #player-name {
+  background: #fff;
+  border-color: rgba(29,29,27,0.2);
+  color: #1D1D1B;
+}
+[data-theme="light"] #player-name::placeholder { color: rgba(29,29,27,0.3); }
+[data-theme="light"] .welcome-scores-link { color: rgba(29,29,27,0.4); }
+[data-theme="light"] .welcome-scores-link:hover { color: rgba(29,29,27,0.7); }
+[data-theme="light"] .wcat { opacity: 0.75; }
+
+/* Dark answer hover */
+[data-theme="dark"] .answer-btn:not(:disabled):hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ═══════════════════════════════════════════════════
+   WELCOME SCREEN — REDESIGN
+═══════════════════════════════════════════════════ */
+
+.welcome-inner { gap: 22px; }
+
+.welcome-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.welcome-badge {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+
+/* Floating bath-bomb bubbles */
+.welcome-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wb {
+  position: absolute;
+  border-radius: 50%;
+  animation: wbFloat var(--dur, 8s) var(--del, 0s) ease-in-out infinite;
+}
+
+.wb-1 { width:280px;height:280px;background:radial-gradient(circle at 35% 35%,#009453,#005530);top:-100px;left:-80px;opacity:.22;--dur:9s; }
+.wb-2 { width:200px;height:200px;background:radial-gradient(circle at 35% 35%,#C44FB5,#7B2D8B);top:15%;right:-60px;opacity:.18;--dur:7s;--del:1.2s; }
+.wb-3 { width:140px;height:140px;background:radial-gradient(circle at 35% 35%,#42A5F5,#1565C0);bottom:28%;left:8%;opacity:.2;--dur:8s;--del:2.5s; }
+.wb-4 { width:110px;height:110px;background:radial-gradient(circle at 35% 35%,#F5D76E,#E6A817);bottom:12%;right:12%;opacity:.22;--dur:10s;--del:.8s; }
+.wb-5 { width:75px;height:75px;background:radial-gradient(circle at 35% 35%,#E1042D,#8B0000);top:42%;left:5%;opacity:.18;--dur:6s;--del:3s; }
+.wb-6 { width:220px;height:220px;background:radial-gradient(circle at 35% 35%,#FF7043,#E64A19);bottom:-80px;left:35%;opacity:.14;--dur:11s;--del:1.8s; }
+
+@keyframes wbFloat {
+  0%,100% { transform: translateY(0) scale(1) rotate(0deg); }
+  33%      { transform: translateY(-22px) scale(1.04) rotate(3deg); }
+  66%      { transform: translateY(14px) scale(.97) rotate(-3deg); }
+}
+
+/* Stats row */
+.welcome-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+
+.ws-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.ws-num {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 30px;
+  color: var(--green);
+  line-height: 1;
+}
+
+.ws-lbl {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+}
+
+.ws-sep {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 1px;
+}
+
+/* Category chip pills */
+.welcome-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 380px;
+}
+
+.wcat {
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--wc, #333);
+  color: rgba(255,255,255,0.92);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* ═══════════════════════════════════════════════════
+   THEME TOGGLE BUTTON
+═══════════════════════════════════════════════════ */
+
+.theme-toggle-btn {
+  position: fixed;
+  bottom: 14px;
+  right: 14px;
+  z-index: 1100;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(128,128,128,0.25);
+  background: rgba(128,128,128,0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.25s;
+  line-height: 1;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(128,128,128,0.32);
+  transform: scale(1.12) rotate(18deg);
+}
+
+/* ═══════════════════════════════════════════════════
+   QUESTION HEADER — BACK & PAUSE BUTTONS
+═══════════════════════════════════════════════════ */
+
+.q-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.q-icon-btn:hover {
+  background: var(--bg);
+  transform: scale(1.08);
+}
+
+.question-header { gap: 8px; }
+
+/* ═══════════════════════════════════════════════════
+   GAME MODALS (PAUSE / CONFIRM)
+═══════════════════════════════════════════════════ */
+
+.game-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.game-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.game-modal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 28px 28px;
+  max-width: 300px;
+  width: 88%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+  animation: modalPop 0.25s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-icon { font-size: 44px; line-height: 1; }
+
+.modal-title {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 26px;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: -4px;
+}
+
+.modal-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: -4px;
+}
+
+.btn-secondary-modal {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+  border: 1px solid var(--border) !important;
+  font-size: 15px;
+}
+
+.btn-danger { background: var(--red); }
+.btn-danger:hover { background: #c0021f; box-shadow: 0 6px 20px rgba(225,4,45,0.4); }
+
+/* ═══════════════════════════════════════════════════
+   SPLASH / LANDING SCREEN
+═══════════════════════════════════════════════════ */
+
+#screen-splash {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="dark"] #screen-splash {
+  background: linear-gradient(160deg, #0d1a14 0%, #1a1a18 55%, #1a1218 100%);
+}
+
+[data-theme="light"] #screen-splash {
+  background: linear-gradient(160deg, #e5f5ed 0%, #faf8f3 55%, #fdf0f5 100%);
+}
+
+.splash-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 360px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+/* Actual Lush logo image */
+.lush-logo-img {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  /* invert black logo to white in dark mode */
+  filter: invert(1);
+  transition: filter 0.3s;
+}
+
+[data-theme="light"] .lush-logo-img {
+  filter: none;
+}
+
+.lush-logo-img--sm {
+  height: 52px;
+}
+
+.splash-tagline {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 26px;
+  color: var(--text);
+  line-height: 1.35;
+  max-width: 260px;
+  margin: 0;
+}
+
+.splash-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 340px;
+}
+
+.splash-btn {
+  width: 100%;
+  max-width: 280px;
+  font-size: 17px;
+  padding: 16px 24px;
+}
+
+/* ═══════════════════════════════════════════════════
+   NAME ENTRY SCREEN
+═══════════════════════════════════════════════════ */
+
+#screen-welcome {
+  background: var(--bg);
+}
+
+[data-theme="dark"] #screen-welcome {
+  background: linear-gradient(160deg, #0d1a14 0%, #1a1a18 60%, #1a1218 100%);
+}
+
+[data-theme="light"] #screen-welcome {
+  background: linear-gradient(160deg, #e5f5ed 0%, #faf8f3 60%, #fdf0f5 100%);
+}
+
+.name-entry-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 340px;
+  padding: 32px 24px;
+}
+
+.name-entry-sub {
+  font-family: "Fredoka One", "Fredoka", cursive;
+  font-size: 20px;
+  color: var(--text-muted);
+  margin: -8px 0 0;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════
+   CATEGORIES PAGE — DOODLE LAYER
+═══════════════════════════════════════════════════ */
+
+#screen-categories {
+  position: relative;
+}
+
+.cat-doodle-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.cdoodle {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  font-size: var(--s, 1.5rem);
+  transform: rotate(var(--rot, 0deg)) translateY(0);
+  opacity: 0.28;
+  animation: doodleFloat 7s ease-in-out infinite;
+  animation-delay: var(--del, 0s);
+  user-select: none;
+  line-height: 1;
+}
+
+[data-theme="light"] .cdoodle {
+  opacity: 0.42;
+}
+
+@keyframes doodleFloat {
+  0%, 100% { transform: rotate(var(--rot, 0deg)) translateY(0px); }
+  50%       { transform: rotate(var(--rot, 0deg)) translateY(-12px); }
+}
+
+/* Push category content above doodles */
+.categories-title,
+.categories-subtitle,
+.categories-grid {
+  position: relative;
+  z-index: 1;
+}
