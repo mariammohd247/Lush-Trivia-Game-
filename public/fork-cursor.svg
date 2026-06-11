@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="48" viewBox="0 0 32 48" fill="none">
+  <!-- Tines -->
+  <rect x="5"  y="0" width="4" height="15" rx="2" fill="#5C3A1E"/>
+  <rect x="11" y="0" width="4" height="15" rx="2" fill="#5C3A1E"/>
+  <rect x="17" y="0" width="4" height="15" rx="2" fill="#5C3A1E"/>
+  <rect x="23" y="0" width="4" height="15" rx="2" fill="#5C3A1E"/>
+  <!-- Bridge from tines to handle -->
+  <path d="M5 14 Q5 22 15.5 22 Q26 22 26 14" stroke="#5C3A1E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Handle -->
+  <rect x="13" y="22" width="5" height="24" rx="2.5" fill="#5C3A1E"/>
+  <!-- Highlight on handle -->
+  <rect x="14.5" y="24" width="2" height="18" rx="1" fill="#8B6045" opacity="0.6"/>
+</svg>
