@@ -182,7 +182,7 @@ export default function GamePage() {
         <section className="relative z-10 w-full max-w-2xl animate-fade-up">
           <div className="doodle-card p-6 md:p-8 text-center mb-6">
             <h2 className="text-4xl font-bold text-ink mb-1">
-              Pick your cuisine! 🌍
+              Pick your category! 🍽️
             </h2>
             <p className="text-lg text-gray-500">Choose a category to start cooking</p>
             {error && (
@@ -380,7 +380,7 @@ export default function GamePage() {
                 className="doodle-btn py-4 text-xl font-bold text-white"
                 style={{ background: meta.color }}
               >
-                Try another cuisine! 🌍
+                Try another category! 🍽️
               </button>
             )}
             <button
