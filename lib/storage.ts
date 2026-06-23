@@ -25,7 +25,7 @@ export function getLeaderboard(): LeaderboardEntry[] {
   }
 }
 
-export function saveSession(data: Record<string, unknown>): void {
+export function saveSession(data: object): void {
   if (typeof window === "undefined") return;
   sessionStorage.setItem("food-trivia-session", JSON.stringify(data));
 }
